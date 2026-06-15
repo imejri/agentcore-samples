@@ -273,4 +273,171 @@ sequenceDiagram
 
 ---
 
-*Document en cours de construction - Prochaine section : AWS AgentCore*
+## Prototype-to-Production Chasm
+
+When you move AI agents from simple prototypes to production environments, you face significant challenges. While creating a basic agent for demonstration is straightforward, deploying agents at enterprise scale is more complex. You need to address scalability, security, performance, and state management.
+
+This prototype-to-production chasm represents the gap between proof-of-concept success and enterprise deployment readiness. Many companies struggle with this transition. You might find that your successful agent demos face substantial hurdles when moving to real-world production environments.
+
+### Key Challenges
+
+| Challenge | Description |
+|---|---|
+| **Scalability** | Handling concurrent users and high-throughput workloads reliably |
+| **Security** | Managing authentication, authorization, and data protection at scale |
+| **Performance** | Maintaining low latency and consistent response times under load |
+| **State Management** | Persisting context and memory across interactions and sessions |
+| **Observability** | Monitoring, tracing, and debugging agent behavior in production |
+
+---
+
+## Amazon Bedrock AgentCore
+
+Amazon Bedrock AgentCore was built to bridge the prototype-to-production gap. It provides enterprise-grade capabilities designed for production agent deployment. These capabilities help you achieve genuine business value from agentic AI initiatives. They address the infrastructure and operational challenges that prevent prototype agents from scaling effectively.
+
+AgentCore addresses the key challenges of moving agents from prototypes to scalable, secure, and observable production systems. When you create successful agent demonstrations, you often struggle to deploy agents at scale with enterprise reliability. AgentCore bridges this production readiness gap by providing the infrastructure you need for real-world applications.
+
+### AgentCore Key Capabilities
+
+AgentCore offers several key capabilities:
+
+1. A purpose-built agent runtime and identity management system
+2. Simplified tools discovery and integration processes
+3. Both short-term and long-term memory management
+4. End-to-end visibility for tracing, debugging, and monitoring agent operations
+5. Fully managed browser tool and code interpretation capabilities
+
+This eliminates the complexity of building and maintaining these features independently while meeting enterprise security and scalability standards.
+
+### Architecture Overview
+
+```mermaid
+graph TB
+    subgraph Users["User Interfaces"]
+        U["Users / Applications"]
+    end
+
+    subgraph Runtime["AgentCore Runtime"]
+        R["Execution Environment"]
+        LT["Local Tools"]
+        MOD["Models (LLMs)"]
+        R <--> LT
+        R <--> MOD
+    end
+
+    subgraph Primitives["AgentCore Primitives"]
+        GW["AgentCore Gateway<br/>(External Communication, API Management)"]
+        BR["AgentCore Browser<br/>(Web Interaction, Form Automation, Data Extraction)"]
+        CI["AgentCore Code Interpreter<br/>(Computation, Dynamic API Interactions)"]
+    end
+
+    subgraph System["System Components"]
+        ID["AgentCore Identity<br/>(Authentication & Authorization)"]
+        MEM["AgentCore Memory<br/>(Persistent Storage, Context Retention)"]
+        OBS["AgentCore Observability<br/>(Logs, Metrics, Traces)"]
+    end
+
+    U <--> GW
+    GW <--> R
+    R <--> BR
+    R <--> CI
+    R <--> ID
+    R <--> MEM
+    OBS -.->|"monitors"| R
+    OBS -.->|"monitors"| MEM
+    OBS -.->|"monitors"| ID
+
+    style R fill:#4a90d9,stroke:#2c5f8a,color:#fff,font-weight:bold
+    style GW fill:#27ae60,stroke:#1e8449,color:#fff
+    style BR fill:#e67e22,stroke:#d35400,color:#fff
+    style CI fill:#8e44ad,stroke:#6c3483,color:#fff
+    style ID fill:#e74c3c,stroke:#c0392b,color:#fff
+    style MEM fill:#f39c12,stroke:#d68910,color:#fff
+    style OBS fill:#1abc9c,stroke:#16a085,color:#fff
+    style LT fill:#f5f5f5,stroke:#333,color:#333
+    style MOD fill:#f5f5f5,stroke:#333,color:#333
+    style U fill:#f5f5f5,stroke:#333,color:#333
+```
+
+---
+
+### AgentCore Runtime
+
+AgentCore Runtime serves as the execution environment where your agents operate based on their instructions. The Runtime uses local tools within their specific context and connects to underlying models. It also provides user management through connected interfaces.
+
+**Key responsibilities:**
+- Agent execution environment
+- Local tool orchestration
+- Model connectivity (LLM integration)
+- User management through connected interfaces
+
+---
+
+### AgentCore Gateway
+
+AgentCore Gateway handles external communication and API management for you. It serves as the entry point for user requests and manages traffic routing to your agents.
+
+**Key responsibilities:**
+- External communication management
+- API management and routing
+- Traffic control and load balancing
+
+---
+
+### AgentCore Browser
+
+AgentCore Browser enables web page interaction for form automation and data extraction. This fully managed capability eliminates the need to build and maintain browser automation infrastructure.
+
+**Key responsibilities:**
+- Web page interaction
+- Form automation
+- Data extraction from web sources
+
+---
+
+### AgentCore Code Interpreter
+
+AgentCore Code Interpreter provides computational abilities and dynamic API interactions. It allows agents to execute code, perform calculations, and interact with APIs programmatically.
+
+**Key responsibilities:**
+- Computational abilities
+- Dynamic API interactions
+- Code execution in sandboxed environments
+
+---
+
+### AgentCore Identity
+
+AgentCore Identity manages authentication and authorization for secure user and agent access. It ensures that only authorized users and agents can interact with the system.
+
+**Key responsibilities:**
+- Authentication management
+- Authorization and access control
+- Secure user and agent identity verification
+
+---
+
+### AgentCore Memory
+
+AgentCore Memory provides persistent storage for context retention across interactions. It manages both short-term (session) and long-term (cross-session) memory for your agents.
+
+**Key responsibilities:**
+- Persistent storage
+- Context retention across interactions
+- Short-term and long-term memory management
+
+---
+
+### AgentCore Observability
+
+AgentCore Observability offers comprehensive monitoring through logs, metrics, and traces from Runtime, Memory, and Identity components. It provides end-to-end visibility into your agent operations.
+
+**Key responsibilities:**
+- Logs collection and analysis
+- Metrics tracking and alerting
+- Distributed tracing across components (Runtime, Memory, Identity)
+- End-to-end system visibility
+
+---
+
+This integrated architecture creates a robust, secure, and transparent environment for AI agents in production. You benefit from bidirectional communication between components and holistic system visibility.
